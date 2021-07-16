@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.spring.todo.mapper.TodoMapper">
+	<!-- Get all Todo -->
+	<select id="getAllTodo"
+		resultType="org.spring.todo.model.response.TodoResponse">
+		SELECT  id As id
+			   ,workname As workName
+			   ,startingdate As startingDate
+			   ,endingdate As endingDate
+			   ,status As status
+		  FROM  todotb
+	</select>
+	<!-- Get Todo By ID -->
+	<select id="getTodoById"
+		resultType="org.spring.todo.model.entity.Todo">
+		SELECT  id As id
+			   ,workname As workName
+			   ,startingdate As startingDate
+			   ,endingdate As endingDate
+			   ,status As status
+		  FROM  todotb
+		 WHERE  id = #{id}
+	</select>
+	<!-- Insert Todo  -->
+	<insert id="insertTodo"
+		parameterType="org.spring.todo.model.entity.Todo">
+		INSERT INTO todotb
+				   (workname
+				   ,startingdate
+				   ,endingdate
+				   ,status
+				   )
+	         VALUES
+	               (#{workName}
+	               ,#{startingDate}
+	               ,#{endingDate}
+	               ,#{status})
+	</insert>
+	<!-- Update Todo  -->
+	<update id="updateTodo"
+		parameterType="org.spring.todo.model.entity.Todo">
+		 UPDATE todotb
+		    SET 
+			<if test="workName != null">
+				workname = #{workName}
+			</if>
+		 	<if test="startingDate != null">
+				,startingdate = #{startingDate}
+			</if>
+		 	<if test="endingDate != null">
+				,endingdate = #{endingDate}
+			</if>
+		 	<if test="status != null">
+				,status = #{status}
+			</if>
+		  WHERE id = #{id}
+	</update>
+	<!-- Delete Todo  -->
+	<delete id="deleteTodo">
+	    DELETE FROM todotb
+         WHERE id = #{id}
+	</delete>
+</mapper>
